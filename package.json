@@ -1,0 +1,148 @@
+{
+  "name": "task-runner-panel",
+  "displayName": "Task Runner Panel",
+  "description": "List tasks.json tasks in a sidebar view with run and stop buttons.",
+  "version": "0.2.0",
+  "publisher": "Larvan2",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Larvan2/task-panel.git"
+  },
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "taskPanel",
+          "title": "任务",
+          "icon": "media/tasks.svg"
+        }
+      ]
+    },
+    "views": {
+      "taskPanel": [
+        {
+          "id": "taskPanel.tasks",
+          "name": "任务"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "taskPanel.tasks",
+        "contents": "当前文件夹的 tasks.json 里没有任务。\n[配置任务](command:workbench.action.tasks.configureTaskRunner)",
+        "when": "workbenchState != empty"
+      },
+      {
+        "view": "taskPanel.tasks",
+        "contents": "[打开文件夹](command:workbench.action.files.openFolder)",
+        "when": "workbenchState == empty"
+      }
+    ],
+    "commands": [
+      {
+        "command": "taskPanel.run",
+        "title": "运行",
+        "icon": "$(play)"
+      },
+      {
+        "command": "taskPanel.stop",
+        "title": "停止",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "taskPanel.restart",
+        "title": "重新运行",
+        "icon": "$(debug-restart)"
+      },
+      {
+        "command": "taskPanel.showTerminal",
+        "title": "显示终端",
+        "icon": "$(terminal)"
+      },
+      {
+        "command": "taskPanel.openDefinition",
+        "title": "打开任务定义",
+        "icon": "$(go-to-file)"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "taskPanel.showTerminal",
+          "when": "view == taskPanel.tasks && viewItem =~ /\\bterminal\\b/",
+          "group": "inline@1"
+        },
+        {
+          "command": "taskPanel.run",
+          "when": "view == taskPanel.tasks && viewItem =~ /\\bidle\\b/",
+          "group": "inline@2"
+        },
+        {
+          "command": "taskPanel.restart",
+          "when": "view == taskPanel.tasks && viewItem =~ /\\brunning\\b/",
+          "group": "inline@2"
+        },
+        {
+          "command": "taskPanel.stop",
+          "when": "view == taskPanel.tasks && viewItem =~ /\\brunning\\b/",
+          "group": "inline@3"
+        },
+        {
+          "command": "taskPanel.run",
+          "when": "view == taskPanel.tasks && viewItem =~ /\\bidle\\b/",
+          "group": "1_run@1"
+        },
+        {
+          "command": "taskPanel.restart",
+          "when": "view == taskPanel.tasks && viewItem =~ /\\brunning\\b/",
+          "group": "1_run@2"
+        },
+        {
+          "command": "taskPanel.stop",
+          "when": "view == taskPanel.tasks && viewItem =~ /\\brunning\\b/",
+          "group": "1_run@3"
+        },
+        {
+          "command": "taskPanel.showTerminal",
+          "when": "view == taskPanel.tasks && viewItem =~ /\\bterminal\\b/",
+          "group": "2_view@1"
+        },
+        {
+          "command": "taskPanel.openDefinition",
+          "when": "view == taskPanel.tasks",
+          "group": "2_view@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "taskPanel.run",
+          "when": "false"
+        },
+        {
+          "command": "taskPanel.stop",
+          "when": "false"
+        },
+        {
+          "command": "taskPanel.restart",
+          "when": "false"
+        },
+        {
+          "command": "taskPanel.showTerminal",
+          "when": "false"
+        },
+        {
+          "command": "taskPanel.openDefinition",
+          "when": "false"
+        }
+      ]
+    }
+  }
+}
